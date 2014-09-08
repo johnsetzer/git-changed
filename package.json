@@ -1,6 +1,6 @@
 {
   "name": "git-changed",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Returns a list of files changed between two git revisions.",
   "main": "index.js",
   "scripts": {
