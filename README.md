@@ -1,8 +1,9 @@
 git-changed
 ===========
 
-Node module that returns a list of changed files between two revisions.
+Node module that returns a list of changed files between two git revisions and returns the last commit.
 
+##changedFiles()
 ```javascript
 gitChanged.changedFiles('396bf4f31641c9f3b97b5ebd79f7a0afab1e6c2e..HEAD', function(err, files) {
 	files.forEach(function(f) {
@@ -17,7 +18,7 @@ M dir/modified.js
 D dir/deleted.js
 ```
 
-
+##lastCommit()
 ```javascript
 gitChanged.lastCommit(function(err, commit) {
 	console.log(commit.sha, commit.time);
