@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/johnsetzer/git-changed",
   "dependencies": {
-    "byline": "^4.1.1"
+    "event-stream": "^3.1.7"
   }
 }
