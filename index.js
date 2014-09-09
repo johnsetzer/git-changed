@@ -18,6 +18,21 @@ exports.lastCommit = function (cb) {
 	});
 };
 
+// Callbacks list of files tracked by git
+exports.trackedFiles = function (treeish, cb) {
+	var lsTreeCmd = 'git ls-tree --full-tree --name-only -r ' + treeish;
+	var log = exec(lsTreeCmd, function (error, stdout, stderr) {
+		if (error) { cb(error); return; }
+
+		var files = stdout.split('\n');
+	  
+	  // Chop off empty line at end
+	  files.pop();
+	  
+	  cb(null, files);
+	});
+};
+
 // Callbacks list of changed files
 exports.changedFiles = function (range, cb) {
 	var git = spawn('git', ['diff', range, '--name-status']);

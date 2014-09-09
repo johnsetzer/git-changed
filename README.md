@@ -3,7 +3,7 @@ git-changed
 
 Node module that returns a list of changed files between two git revisions and returns the last commit.
 
-##changedFiles()
+##changedFiles(range, cb)
 ```javascript
 gitChanged.changedFiles('396bf4f31641c9f3b97b5ebd79f7a0afab1e6c2e..HEAD', function(err, files) {
 	files.forEach(function(f) {
@@ -18,7 +18,22 @@ M dir/modified.js
 D dir/deleted.js
 ```
 
-##lastCommit()
+##trackedFiles(treeish, cb)
+```javascript
+gitChanged.trackedFiles('HEAD', function(err, files) {
+	files.forEach(function(f) {
+		console.log(f);
+	});
+});
+```
+outputs
+```
+dir/added.js
+dir/modified.js
+dir/not_in_changed_file_range.js
+```
+
+##lastCommit(cb)
 ```javascript
 gitChanged.lastCommit(function(err, commit) {
 	console.log(commit.sha, commit.time);
