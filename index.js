@@ -41,10 +41,14 @@ exports.changedFiles = function (range, cb) {
   git.stdout
     .pipe(es.split())
     .pipe(es.map(function (line, cb) {
-      changedFiles.push({
-        change: line.slice(0,1),
-        file: line.slice(1).trim()
-      });
+      var change = line.slice(0,1).trim();
+      var file = line.slice(1).trim();
+      if (change && file) {
+        changedFiles.push({
+          change: change,
+          file: file
+        });
+      }
       cb(null, line);
     }))
     .on('end', function() {
