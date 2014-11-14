@@ -3,9 +3,14 @@ var spawn = require('child_process').spawn;
 var fs = require('fs');
 var es = require('event-stream');
 
+var getCwd = function () {
+  return !!process.env.CWD ? process.env.CWD : '.';
+};
+
 // Callbacks last commit
 exports.lastCommit = function (cb) {
-  var log = exec('git log -1 --pretty=format:"%H%n%ct"', function (error, stdout, stderr) {
+  var cmd = 'git -C ' + getCwd() + ' log -1 --pretty=format:"%H%n%ct"';
+  var log = exec(cmd, function (error, stdout, stderr) {
     if (error) { cb(error); return; }
     
     var parts = stdout.split('\n');
@@ -20,7 +25,7 @@ exports.lastCommit = function (cb) {
 
 // Callbacks list of files tracked by git
 exports.trackedFiles = function (treeish, cb) {
-  var lsTreeCmd = 'git ls-tree --full-tree --name-only -r ' + treeish;
+  var lsTreeCmd = 'git -C ' + getCwd() + ' ls-tree --full-tree --name-only -r ' + treeish;
   var log = exec(lsTreeCmd, function (error, stdout, stderr) {
     if (error) { cb(error); return; }
 
@@ -35,7 +40,7 @@ exports.trackedFiles = function (treeish, cb) {
 
 // Callbacks list of changed files
 exports.changedFiles = function (range, cb) {
-  var git = spawn('git', ['diff', range, '--name-status']);
+  var git = spawn('git', ['-C ' + getCwd(), 'diff', range, '--name-status']);
   var changedFiles = [];
 
   git.stdout
